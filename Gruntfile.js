@@ -2,17 +2,18 @@ module.exports = function(grunt) {
 
     require('load-grunt-tasks')(grunt);
 
-    var app = {
-        apps: [
-            'iamapp',
-        ],
-    };
+    var pkg = grunt.file.readJSON('package.json'),
+        appConfig = {
+            name: pkg.name,
+            apps: [
+                'iamapp',
+            ],
+        };
 
     // Project configuration.
     grunt.initConfig({
-        pkg: grunt.file.readJSON('package.json'),
-        app: app,
-        srcDir: '<%= pkg.name %>',
+        app: appConfig,
+        srcDir: '<%= app.name %>',
         destDir: 'build',
         tempDir: 'tmp',
         copy: {
@@ -82,18 +83,6 @@ module.exports = function(grunt) {
                 banner: '/*! Build by grunt in <%= grunt.template.today("yyyy-mm-dd") %> */\n'
             }
         },
-        // cssmin: {
-        //     build: {
-        //         files: [
-        //             {
-        //                 expand: true,
-        //                 cwd: '<%= srcDir %>',
-        //                 src: ['static/css/**/*.css'],
-        //                 dest: '<%= destDir %>'
-        //             }
-        //         ]
-        //     }
-        // },
         filerev: {
             options: {
               encoding: 'utf8',
