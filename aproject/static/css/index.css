@@ -1,0 +1,11 @@
+/*!
+ * index.css
+ */
+
+body {
+    background: #F4E5B0;
+}
+
+body:after {
+    content: "from index.css"
+}

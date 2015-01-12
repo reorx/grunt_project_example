@@ -3,8 +3,18 @@
 <head>
     <meta charset="UTF-8">
     <title></title>
+
+    <!-- build:css /static/css/base.css -->
+    <link rel="stylesheet" href="/static/css/lib/normalize.css" media="all">
+    <link rel="stylesheet" href="/static/css/lib/skeleton.css" media="all">
+    <link rel="stylesheet" href="/static/css/layout.css" media="all">
+    <!-- endbuild -->
+    {% block styles %}
+    {% endblock %}
 </head>
 <body>
+    <div class="logo">Grunt Project Example</div>
+
     <h1>[ layout.html</h1>
 
     {% block main %}

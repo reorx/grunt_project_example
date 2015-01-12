@@ -1,0 +1,11 @@
+/*!
+ * iamapp.css
+ */
+
+body {
+    background: #D3EDF4;
+}
+
+body:after {
+    content: "from iamapp.css"
+}
