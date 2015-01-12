@@ -15,7 +15,7 @@ module.exports = function(grunt) {
         app: appConfig,
         srcDir: '<%= app.name %>',
         destDir: 'build',
-        tempDir: 'tmp',
+        tempDir: '.tmp',
         copy: {
             // Copy static/css/ to temp dir for further operation by usemin
             temp: {
