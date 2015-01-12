@@ -15,8 +15,21 @@ module.exports = function(grunt) {
         srcDir: '<%= pkg.name %>',
         destDir: 'build',
         tempDir: 'tmp',
-        // Copy template/ and everything under static/ except css and js dirs.
         copy: {
+            // Copy static/css/ to temp dir for further operation by usemin
+            temp: {
+                files: [
+                    {
+                        expand: true,
+                        cwd: '<%= srcDir %>',
+                        src: [
+                            'static/css/**',
+                        ],
+                        dest: '<%= tempDir %>'
+                    }
+                ]
+            },
+            // Copy dirs and files no need for transformation directly to build
             build: {
                 files: [
                     {
@@ -29,13 +42,10 @@ module.exports = function(grunt) {
                         dest: '<%= destDir %>'
                     }
                 ]
-            }
+            },
         },
         useminPrepare: {
-            html: ['<%= srcDir %>/template/<%= app.apps %>/*.html'],
-            //build: {
-                //src: '<%= srcDir %>/template/*/*.html',
-            //},
+            html: ['<%= srcDir %>/template/**/*.html'],
             options: {
                 root: '<%= tempDir %>',  // root for resolving js and css files to transform
                 dest: '<%= destDir %>',
@@ -43,12 +53,10 @@ module.exports = function(grunt) {
             }
         },
         usemin: {
-            //html: '<%= destDir %>/iamapp.html',
             html: '<%= destDir %>/template/{,*/}*.html',
             options: {
                 assetsDirs: ['<%= destDir %>']
             }
-            //html: ['<%= srcDir %>/template/<%= app.apps %>/*.html'],
         },
         requirejs: {
             options: {
@@ -74,6 +82,18 @@ module.exports = function(grunt) {
                 banner: '/*! Build by grunt in <%= grunt.template.today("yyyy-mm-dd") %> */\n'
             }
         },
+        // cssmin: {
+        //     build: {
+        //         files: [
+        //             {
+        //                 expand: true,
+        //                 cwd: '<%= srcDir %>',
+        //                 src: ['static/css/**/*.css'],
+        //                 dest: '<%= destDir %>'
+        //             }
+        //         ]
+        //     }
+        // },
         filerev: {
             options: {
               encoding: 'utf8',
@@ -81,7 +101,10 @@ module.exports = function(grunt) {
               length: 8,
             },
             build: {
-                src: '<%= destDir %>/**/*.js'
+                src: [
+                    '<%= destDir %>/**/*.js',
+                    '<%= destDir %>/**/*.css',
+                ]
             }
         },
         shell: {
@@ -103,6 +126,7 @@ module.exports = function(grunt) {
         'requirejs',
         'concat',  // Called by usemin
         'uglify',  // Called by usemin
+        'cssmin',  // Called by usemin
         'filerev',
         'usemin',
         'shell:show_built'
